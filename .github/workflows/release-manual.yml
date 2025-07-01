@@ -41,6 +41,16 @@ jobs:
       - name: Build package
         run: npm run release
 
+      - name: Zip dist folder
+        run: zip -r dist.zip dist
+
+      - name: Create GitHub Release and upload dist.zip
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Trigger badge update (optional)
         uses: peter-evans/repository-dispatch@v3
         with:
